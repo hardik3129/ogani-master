@@ -1,0 +1,58 @@
+    [
+      {
+        "id" : 1,
+        "name" : "Fresh Meat",
+        "image" : "img/featured/feature-1.jpg",
+        "price" : 35,
+        "filter" : "oranges fresh-meat"
+      },
+      {
+        "id" : 2,
+        "name" : "Banana",
+        "image" : "img/featured/feature-2.jpg",
+        "price" : 12,
+        "filter" : "vegetables fastfood"
+      },
+      {
+        "id" : 3,
+        "name" : "Guava",
+        "image" : "img/featured/feature-3.jpg",
+        "price" : 45,
+        "filter" : "vegetables fresh-meat"
+      },
+      {
+        "id" : 4,
+        "name" : "Watermelon",
+        "image" : "img/featured/feature-4.jpg",
+        "price" : 200,
+        "filter" : "fastfood oranges"
+      },
+      {
+        "id" : 5,
+        "name" : "Angur",
+        "image" : "img/featured/feature-5.jpg",
+        "price" : 30,
+        "filter" : "fresh-meat vegetables"
+      },
+      {
+        "id" : 6,
+        "name" : "Burger",
+        "image" : "img/featured/feature-6.jpg",
+        "price" : 200,
+        "filter" : "oranges fastfood"
+      },
+      {
+        "id" : 7,
+        "name" : "Mango",
+        "image" : "img/featured/feature-7.jpg",
+        "price" : 50,
+        "filter" : "fresh-meat vegetables"
+      },
+      {
+        "id" : 8,
+        "name" : "Apple",
+        "image" : "img/featured/feature-8.jpg",
+        "price" : 40,
+        "filter" : "fastfood vegetables"
+      }
+]
