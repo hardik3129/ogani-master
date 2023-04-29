@@ -54,5 +54,33 @@
         "image" : "img/featured/feature-8.jpg",
         "price" : 40,
         "filter" : "fastfood vegetables"
+      },
+      {
+        "id" : 9,
+        "name" : "Dates",
+        "image" : "img/featured/feature-9.jpg",
+        "price" : 49,
+        "filter" : "fastfood vegetables"
+      },
+      {
+        "id" : 10,
+        "name" : "Chicken Leg Piece",
+        "image" : "img/featured/feature-10.jpg",
+        "price" : 40,
+        "filter" : "fresh-meat fastfood"
+      },
+      {
+        "id" : 11,
+        "name" : "Tropicana",
+        "image" : "img/featured/feature-11.jpg",
+        "price" : 29,
+        "filter" : "oranges"
+      },
+      {
+        "id" : 12,
+        "name" : "Mix Combo",
+        "image" : "img/featured/feature-12.jpg",
+        "price" : 40,
+        "filter" : "fastfood vegetables"
       }
 ]

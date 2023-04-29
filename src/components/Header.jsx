@@ -80,22 +80,16 @@ const Header = () => {
                       <Link to={"/"}>Home</Link>
                     </li>
                     <li>
-                      <Link to={""}>Shop</Link>
+                      <Link to={"/shope"}>Shop</Link>
                     </li>
                     <li>
-                      <Link to={""}>Pages</Link>
+                      <Link>Pages</Link>
                       <ul className="header__menu__dropdown">
                         <li>
-                          <Link to={""}>Shop Details</Link>
+                          <Link to={"/cart"}>Shoping Cart</Link>
                         </li>
                         <li>
-                          <Link to={""}>Shoping Cart</Link>
-                        </li>
-                        <li>
-                          <Link to={""}>Check Out</Link>
-                        </li>
-                        <li>
-                          <Link to={""}>Blog Details</Link>
+                          <Link to={"/checkout"}>Check Out</Link>
                         </li>
                       </ul>
                     </li>
