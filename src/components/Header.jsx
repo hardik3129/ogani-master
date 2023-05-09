@@ -1,10 +1,23 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, NavLink } from "react-router-dom";
+import { SetCartTotal } from "../redux/action/CartAdd.action";
 
 const Header = () => {
 
+    const [CartTotal, setCartTotal] = useState()
+      
     const getCartData = useSelector((data) => data.CartAddreducer.cart)
+    const dispatch = useDispatch()
+    
+    // ================== Total of All Cart Price ================
+    useEffect(() => {
+      const TotalPriceCart = getCartData.reduce((accu, curn) => {
+          return accu + curn.quantity * curn.price
+      },0)
+      setCartTotal(TotalPriceCart)
+      dispatch(SetCartTotal(TotalPriceCart))
+    },[getCartData])
     
   return (
     <>
@@ -77,7 +90,7 @@ const Header = () => {
                 <nav className="header__menu">
                   <ul>
                     <li>
-                      <Link to={"/"}>Home</Link>
+                      <NavLink to={"/"}>Home</NavLink>
                     </li>
                     <li>
                       <Link to={"/shope"}>Shop</Link>
@@ -93,11 +106,11 @@ const Header = () => {
                         </li>
                       </ul>
                     </li>
-                    <li className="active">
-                      <Link to={""}>Blog</Link>
+                    <li>
+                      <Link to={'/blog'}>Blog</Link>
                     </li>
                     <li>
-                      <Link to={""}>Contact</Link>
+                      <Link to={'/contact'}>Contact</Link>
                     </li>
                   </ul>
                 </nav>
@@ -117,7 +130,7 @@ const Header = () => {
                     </li>
                   </ul>
                   <div className="header__cart__price">
-                    item: <span>$150.00</span>
+                    item: <span>${CartTotal}</span>
                   </div>
                 </div>
               </div>

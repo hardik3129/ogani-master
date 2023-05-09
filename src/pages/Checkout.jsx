@@ -1,6 +1,11 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 const Checkout = () => {
+
+    const CartTotal = useSelector((data) => data.CartAddreducer.cartTotal)
+    const getCartData = useSelector((data) => data.CartAddreducer.cart)
+    
   return (
     <>
         <div>
@@ -114,12 +119,14 @@ const Checkout = () => {
                             <h4>Your Order</h4>
                             <div className="checkout__order__products">Products <span>Total</span></div>
                             <ul>
-                            <li>Vegetable’s Package <span>$75.99</span></li>
-                            <li>Fresh Vegetable <span>$151.99</span></li>
-                            <li>Organic Bananas <span>$53.99</span></li>
+                            {
+                                getCartData.map((i) => {
+                                    return <li>{i.name} <span>${i.price * i.quantity}</span></li>
+                                })
+                            }
                             </ul>
-                            <div className="checkout__order__subtotal">Subtotal <span>$750.99</span></div>
-                            <div className="checkout__order__total">Total <span>$750.99</span></div>
+                            <div className="checkout__order__subtotal">Subtotal <span>${CartTotal}</span></div>
+                            <div className="checkout__order__total">Total <span>${CartTotal}</span></div>
                             <div className="checkout__input__checkbox">
                             <label htmlFor="acc-or">
                                 Create an account?

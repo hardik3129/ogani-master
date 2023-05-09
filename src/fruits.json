@@ -4,83 +4,95 @@
         "name" : "Fresh Meat",
         "image" : "img/featured/feature-1.jpg",
         "price" : 35,
-        "filter" : "oranges fresh-meat"
+        "filter" : "oranges fresh-meat",
+        "totalQuantity" : 5
       },
       {
         "id" : 2,
         "name" : "Banana",
         "image" : "img/featured/feature-2.jpg",
         "price" : 12,
-        "filter" : "vegetables fastfood"
+        "filter" : "vegetables fastfood",
+        "totalQuantity" : 35
       },
       {
         "id" : 3,
         "name" : "Guava",
         "image" : "img/featured/feature-3.jpg",
         "price" : 45,
-        "filter" : "vegetables fresh-meat"
+        "filter" : "vegetables fresh-meat",
+        "totalQuantity" : 68
       },
       {
         "id" : 4,
         "name" : "Watermelon",
         "image" : "img/featured/feature-4.jpg",
         "price" : 200,
-        "filter" : "fastfood oranges"
+        "filter" : "fastfood oranges",
+        "totalQuantity" : 32
       },
       {
         "id" : 5,
         "name" : "Angur",
         "image" : "img/featured/feature-5.jpg",
         "price" : 30,
-        "filter" : "fresh-meat vegetables"
+        "filter" : "fresh-meat vegetables",
+        "totalQuantity" : 67
       },
       {
         "id" : 6,
         "name" : "Burger",
         "image" : "img/featured/feature-6.jpg",
         "price" : 200,
-        "filter" : "oranges fastfood"
+        "filter" : "oranges fastfood",
+        "totalQuantity" : 135
       },
       {
         "id" : 7,
         "name" : "Mango",
         "image" : "img/featured/feature-7.jpg",
         "price" : 50,
-        "filter" : "fresh-meat vegetables"
+        "filter" : "fresh-meat vegetables",
+        "totalQuantity" : 98
       },
       {
         "id" : 8,
         "name" : "Apple",
         "image" : "img/featured/feature-8.jpg",
         "price" : 40,
-        "filter" : "fastfood vegetables"
+        "filter" : "fastfood vegetables",
+        "totalQuantity" : 89
       },
       {
         "id" : 9,
         "name" : "Dates",
         "image" : "img/featured/feature-9.jpg",
         "price" : 49,
-        "filter" : "fastfood vegetables"
+        "filter" : "fastfood vegetables",
+        "totalQuantity" : 90
       },
       {
         "id" : 10,
         "name" : "Chicken Leg Piece",
         "image" : "img/featured/feature-10.jpg",
         "price" : 40,
-        "filter" : "fresh-meat fastfood"
+        "filter" : "fresh-meat fastfood",
+        "totalQuantity" : 54
       },
       {
         "id" : 11,
         "name" : "Tropicana",
         "image" : "img/featured/feature-11.jpg",
         "price" : 29,
-        "filter" : "oranges"
+        "filter" : "oranges",
+        "totalQuantity" : 45
       },
       {
         "id" : 12,
         "name" : "Mix Combo",
         "image" : "img/featured/feature-12.jpg",
         "price" : 40,
-        "filter" : "fastfood vegetables"
+        "filter" : "fastfood vegetables",
+        "totalQuantity" : 78
       }
 ]

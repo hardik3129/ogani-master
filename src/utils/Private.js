@@ -3,8 +3,8 @@ import { Navigate, Outlet } from 'react-router-dom'
 
 const Private = () => {
 
-    if (!localStorage.getItem('AccessKey')) {
-        return <Navigate to={'/login'} />
+    if (localStorage.getItem('AccessKey')) {
+        return <Navigate to={'/'} />
     }
     
   return (

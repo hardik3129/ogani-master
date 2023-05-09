@@ -3,6 +3,7 @@ import FruitData from '../fruits.json'
 import { useDispatch, useSelector } from "react-redux";
 import { CartAddaction } from "../redux/action/CartAdd.action";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   
@@ -11,6 +12,7 @@ const Home = () => {
   const getCartData = useSelector((data) => data.CartAddreducer.cart)
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
     
   const onClickDropdown = () => {
       setdisplayToggle(displayToggle === 'none' ? 'block' : 'none')
@@ -382,7 +384,7 @@ const Home = () => {
               FruitData.map((i) => {
                 return(
                   <div className={`col-lg-3 col-md-4 col-sm-6 mix ${i.filter}`}>
-                    <div className="featured__item">
+                    <div className="featured__item" onClick={() => navigate('')}>
                       <div className="featured__item__pic set-bg" data-setbg={i.image} style={{backgroundImage: `url(${i.image})`, backgroundSize: 'initial'}}>
                         <ul className="featured__item__pic__hover">
                           <li><a><i className="fa fa-heart" /></a></li>
