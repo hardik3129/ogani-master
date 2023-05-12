@@ -16,7 +16,7 @@ const Header = () => {
     
     // ================== Total of All Cart Price ================
     useEffect(() => {
-      const TotalPriceCart = getCartData.reduce((accu, curn) => {
+      const TotalPriceCart = getCartData.filter(i => i.uid == getAccessToken).reduce((accu, curn) => {
           return accu + curn.quantity * curn.price
       },0)
       setCartTotal(TotalPriceCart)
@@ -25,13 +25,12 @@ const Header = () => {
 
     // ================= Login || Logout Set ===================
     useEffect(() => {
-      JSON.parse(localStorage.getItem('AccessKey')) === getAccessToken ? setBool(true) : setBool(false)
+      localStorage.getItem('AccessKey') ? setBool(true) : setBool(false)
     },[])
 
     // ================= Logout ==================
     const OnClickLogout = () => {
       localStorage.removeItem('AccessKey')
-      dispatch(UserAccessaction(''))
     }
     
   return (
@@ -146,7 +145,7 @@ const Header = () => {
                     </li>
                     <li>
                       <Link to={'/cart'}>
-                        <i className="fa fa-shopping-bag" /> <span>{getCartData.length}</span>
+                        <i className="fa fa-shopping-bag" /> <span>{getCartData.filter(i => i.uid == getAccessToken).length}</span>
                       </Link>
                     </li>
                   </ul>

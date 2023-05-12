@@ -10,6 +10,7 @@ const Home = () => {
   const [displayToggle, setdisplayToggle] = useState('none')
 
   const getCartData = useSelector((data) => data.CartAddreducer.cart)
+  const getAccessToken = useSelector((key) => key.UserAccessreducer.AccessToken)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -17,15 +18,15 @@ const Home = () => {
   const onClickDropdown = () => {
       setdisplayToggle(displayToggle === 'none' ? 'block' : 'none')
   }
-  
+  // console.log(getCartData);
   // ======================= Add Product in Cart Page ========================== 
   const OnClickAddToCard = (Cart) => {
-    if (getCartData.find((i) => i.id == Cart.id)) {
+    if (getCartData.find((i) => i.id == Cart.id && i.uid == getAccessToken)) {
       toast.info(`Allready ${Cart.name} Add To Cart`)
     } else {
       const filter = FruitData.find((i) => i.id === Cart.id)
       toast.success(`Successfully ${Cart.name} Add to Cart`)
-      dispatch(CartAddaction(filter))
+      dispatch(CartAddaction({...filter, uid : getAccessToken}))
     }
   }
   

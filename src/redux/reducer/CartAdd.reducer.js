@@ -8,18 +8,18 @@ const initialstate = {
 const CartAddreducer = (state = initialstate, action) => {
 
     if (action.type === ADD_CART) {
-        console.log(action.payload);
         return { ...state, cart : [...state.cart, {...action.payload, quantity : 1}] }
     }
     if (action.type === DELETE_CART) {
-        return { ...state, cart : state.cart.filter((i) => i.id !== action.payload) }
+        const filter = state.cart.filter((i) => i !== action.payload)
+        return { ...state, cart : filter}
     }
     if (action.type === CART_QUANTITY_INCREMENT) {
-        const quantityAdd = state.cart.filter((i) => i.id === action.payload ? i.quantity += 1 : i.quantity)
+        const quantityAdd = state.cart.filter((i) => i.id === action.payload.id && i.uid === action.payload.uid ? i.quantity += 1 : i.quantity)
         return { ...state, cart : quantityAdd }
     }
     if (action.type === CART_QUANTITY_DECREMENT) {
-        const quantityRemove = state.cart.filter((i) => i.id === action.payload ? i.quantity -= 1 : i.quantity)
+        const quantityRemove = state.cart.filter((i) => i.id === action.payload.id && i.uid === action.payload.uid ? i.quantity -= 1 : i.quantity)
         return { ...state, cart : quantityRemove }
     }
     if (action.type === SET_CART_TOTAL) {

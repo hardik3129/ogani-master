@@ -1,25 +1,33 @@
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { auth } from '../firebase'
 import { toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
+import { RingLoader } from 'react-spinners'
+import { UserAccessaction } from '../redux/action/UserAccess.action'
 
 const Login = () => {
 
+    const [Loading, setLoading] = useState(false)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const OnSubmitLoginUser = async (e) => {
         e.preventDefault()
+        setLoading(true)
         const {email, password} = {
             email : e.target.email.value,
             password : e.target.password.value,
         }
         try {
             const res = await signInWithEmailAndPassword(auth, email, password)
-            localStorage.setItem('AccessKey',JSON.stringify(res.user.accessToken))
+            localStorage.setItem('AccessKey',JSON.stringify(res.user.uid))
+            dispatch(UserAccessaction(res.user.uid))
         } catch (error) {
             toast.error(error.message)
         }
+        setLoading(false)
         navigate('/')
     }
     
@@ -41,13 +49,17 @@ const Login = () => {
                     <span className='d-flex align-items-center'>
                         <Link to={'/signup'}>Create An Account</Link>
                     </span>
+                    {Loading === true ?
+                    <button type="button" className="btn btn-default">
+                        <RingLoader color="#fff" loading={Loading} size={25} />
+                    </button> :
                     <button type="submit" className="btn btn-default">Login</button>
+                    }
                     </form>
                 </div>{/*/login form*/}
                 </div>
             </div>
-            </div>
-
+        </div>
     </>
     )
 }

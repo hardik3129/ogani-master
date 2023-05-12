@@ -10,12 +10,14 @@ import { toast } from "react-toastify";
 
 const Cart = () => {
   const CartTotal = useSelector((data) => data.CartAddreducer.cartTotal);
+  const getAccessToken = useSelector(key => key.UserAccessreducer.AccessToken)
 
   // ============== variable store Hook ==============
   const dispatch = useDispatch();
 
   // ========= global data to redux =============
   const getCartData = useSelector((data) => data.CartAddreducer.cart);
+  console.log(getCartData);
 
   return (
     <>
@@ -58,7 +60,7 @@ const Cart = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {getCartData.map((i) => {
+                    {getCartData.filter(i => i.uid == getAccessToken).map((i,ind) => {
                       return (
                         <tr>
                           <td className="shoping__cart__item">
@@ -72,7 +74,7 @@ const Cart = () => {
                             <div className="quantity">
                               <div className="pro-qty">
                                 <span
-                                  onClick={() => i.quantity === 1 ? false : dispatch(CartDecrement(i.id))}
+                                  onClick={() => i.quantity === 1 ? false : dispatch(CartDecrement(i.id, i.uid))}
                                   className="dec qtybtn"
                                 >
                                   -
@@ -80,7 +82,7 @@ const Cart = () => {
                                 <input type="text" value={i.quantity} />
                                 <span
                                   className="inc qtybtn"
-                                  onClick={() => i.quantity === i.totalQuantity ? toast.info("Product limite is over") : dispatch(CartIncrement(i.id))}
+                                  onClick={() => i.quantity === i.totalQuantity ? toast.info("Product limite is over") : dispatch(CartIncrement(i.id, i.uid))}
                                 >
                                   +
                                 </span>
@@ -91,7 +93,7 @@ const Cart = () => {
                             ${i.quantity * i.price}
                           </td>
                           <td
-                            onClick={() => dispatch(CartDeleteaction(i.id))}
+                            onClick={() => dispatch(CartDeleteaction(i))}
                             className="shoping__cart__item__close"
                           >
                             <span className="icon_close" />

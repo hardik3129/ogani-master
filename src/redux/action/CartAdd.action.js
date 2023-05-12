@@ -9,26 +9,26 @@ export const CartAddaction = (data) => {
 }
 
 // =============== Cart Delete ===============
-export const CartDeleteaction = (id) => {
+export const CartDeleteaction = (data) => {
     return {
       type : DELETE_CART,
-      payload : id
+      payload : data
     }
   }
 
 // =============== Cart Increment ===============
-export const CartIncrement = (id) => {
+export const CartIncrement = (id,uid) => {
     return {
       type : CART_QUANTITY_INCREMENT,
-      payload : id
+      payload : {id,uid}
     }
   }
 
 // =============== Cart Decrement ===============
-export const CartDecrement = (id) => {
+export const CartDecrement = (id,uid) => {
     return {
       type : CART_QUANTITY_DECREMENT,
-      payload : id
+      payload : {id,uid}
     }
   }
 
