@@ -1,13 +1,25 @@
+import { signInWithEmailAndPassword } from 'firebase/auth'
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { auth } from '../firebase'
+import { toast } from 'react-toastify'
 
 const Login = () => {
 
     const navigate = useNavigate()
 
-    const OnSubmitLoginUser = (e) => {
+    const OnSubmitLoginUser = async (e) => {
         e.preventDefault()
-        localStorage.setItem('AccessKey','abcd')
+        const {email, password} = {
+            email : e.target.email.value,
+            password : e.target.password.value,
+        }
+        try {
+            const res = await signInWithEmailAndPassword(auth, email, password)
+            localStorage.setItem('AccessKey',JSON.stringify(res.user.accessToken))
+        } catch (error) {
+            toast.error(error.message)
+        }
         navigate('/')
     }
     

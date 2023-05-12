@@ -394,6 +394,7 @@ const Home = () => {
                       </div>
                       <div className="featured__item__text">
                         <h6><a>{i.name}</a></h6>
+                        <h6><a>Stock : {i.totalQuantity}</a></h6>
                         <h5>${i.price}</h5>
                       </div>
                     </div>

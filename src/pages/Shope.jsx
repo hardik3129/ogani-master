@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FruitData from "../fruits.json";
 import { toast } from "react-toastify";
 import { CartAddaction } from "../redux/action/CartAdd.action";
+import { useNavigate } from "react-router-dom";
 
 const Shope = () => {
+  const [price, setprice] = useState(300);
+  const [ProductFruitData, setFruitData] = useState([])
+  const navigate = useNavigate()
+
   const dispatch = useDispatch();
 
   const getCartData = useSelector((data) => data.CartAddreducer.cart);
+
+  useEffect(() => {
+    setFruitData(FruitData)
+  },[])
 
   // ======================= Add Product in Cart Page ==========================
   const OnClickAddToCard = (Cart) => {
@@ -19,6 +28,16 @@ const Shope = () => {
       dispatch(CartAddaction(filter));
     }
   };
+
+  // ======================= Set Price Range ======================
+  const priceRange = (e) => {
+    setprice(e.target.value);
+  };
+
+  const OnclickFilterProduct = () => {
+    const filter = FruitData.filter(i => i.price <= parseInt(price, 10))
+    setFruitData(filter || FruitData)
+  }
 
   return (
     <>
@@ -88,66 +107,27 @@ const Shope = () => {
                 <div className="sidebar__item">
                   <h4>Price</h4>
                   <div className="price-range-wrap">
-                    <div
-                      className="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                      data-min={10}
-                      data-max={540}
-                    >
-                      <div className="ui-slider-range ui-corner-all ui-widget-header" />
-                      <span
-                        tabIndex={0}
-                        className="ui-slider-handle ui-corner-all ui-state-default"
-                      />
-                      <span
-                        tabIndex={0}
-                        className="ui-slider-handle ui-corner-all ui-state-default"
-                      />
-                    </div>
                     <div className="range-slider">
+                      <input
+                        type="range"
+                        className="form-range range-cust"
+                        min={0}
+                        max={300}
+                        defaultValue={price}
+                        onChange={priceRange}
+                      />
                       <div className="price-input">
-                        <input type="text" id="minamount" />
-                        <input type="text" id="maxamount" />
+                        <input type="text" id="minamount" value={0} disabled />
+                        <input
+                          type="text"
+                          id="maxamount"
+                          defaultValue={price}
+                          value={price}
+                          disabled
+                        />
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div className="sidebar__item sidebar__item__color--option">
-                  <h4>Colors</h4>
-                  <div className="sidebar__item__color sidebar__item__color--white">
-                    <label htmlFor="white">
-                      White
-                      <input type="radio" id="white" />
-                    </label>
-                  </div>
-                  <div className="sidebar__item__color sidebar__item__color--gray">
-                    <label htmlFor="gray">
-                      Gray
-                      <input type="radio" id="gray" />
-                    </label>
-                  </div>
-                  <div className="sidebar__item__color sidebar__item__color--red">
-                    <label htmlFor="red">
-                      Red
-                      <input type="radio" id="red" />
-                    </label>
-                  </div>
-                  <div className="sidebar__item__color sidebar__item__color--black">
-                    <label htmlFor="black">
-                      Black
-                      <input type="radio" id="black" />
-                    </label>
-                  </div>
-                  <div className="sidebar__item__color sidebar__item__color--blue">
-                    <label htmlFor="blue">
-                      Blue
-                      <input type="radio" id="blue" />
-                    </label>
-                  </div>
-                  <div className="sidebar__item__color sidebar__item__color--green">
-                    <label htmlFor="green">
-                      Green
-                      <input type="radio" id="green" />
-                    </label>
+                    <button className="btn primary-btn" onClick={OnclickFilterProduct}>Filter</button>
                   </div>
                 </div>
                 <div className="sidebar__item">
@@ -224,561 +204,58 @@ const Shope = () => {
                           width: 3510,
                         }}
                       >
-                        <div
-                          className="owl-item cloned"
-                          style={{ width: "292.5px" }}
-                        >
-                          <div className="col-lg-4">
-                            <div className="product__discount__item">
+                        {
+                          FruitData.map((i) => {
+                            return (
                               <div
-                                className="product__discount__item__pic set-bg"
-                                data-setbg="img/product/discount/pd-4.jpg"
-                                style={{
-                                  backgroundImage:
-                                    'url("img/product/discount/pd-4.jpg")',
-                                }}
+                                className="owl-item cloned"
+                                style={{ width: "292.5px" }}
                               >
-                                <div className="product__discount__percent">
-                                  -20%
-                                </div>
-                                <ul className="product__item__pic__hover">
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-heart" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-retweet" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-shopping-cart" />
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div className="product__discount__item__text">
-                                <span>Dried Fruit</span>
-                                <h5>
-                                  <a href="#">Raisin’n’nuts</a>
-                                </h5>
-                                <div className="product__item__price">
-                                  $30.00 <span>$36.00</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className="owl-item cloned"
-                          style={{ width: "292.5px" }}
-                        >
-                          <div className="col-lg-4">
-                            <div className="product__discount__item">
-                              <div
-                                className="product__discount__item__pic set-bg"
-                                data-setbg="img/product/discount/pd-5.jpg"
-                                style={{
-                                  backgroundImage:
-                                    'url("img/product/discount/pd-5.jpg")',
-                                }}
-                              >
-                                <div className="product__discount__percent">
-                                  -20%
-                                </div>
-                                <ul className="product__item__pic__hover">
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-heart" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-retweet" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-shopping-cart" />
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div className="product__discount__item__text">
-                                <span>Dried Fruit</span>
-                                <h5>
-                                  <a href="#">Raisin’n’nuts</a>
-                                </h5>
-                                <div className="product__item__price">
-                                  $30.00 <span>$36.00</span>
+                                <div className="col-lg-4">
+                                  <div className="product__discount__item">
+                                    <div
+                                      className="product__discount__item__pic set-bg"
+                                      data-setbg={i.image}
+                                      style={{
+                                        backgroundImage: `url(${i.image})`,
+                                      }}
+                                    >
+                                      <div className="product__discount__percent">
+                                        -20%
+                                      </div>
+                                      <ul className="product__item__pic__hover">
+                                        <li>
+                                          <a>
+                                            <i className="fa fa-heart" />
+                                          </a>
+                                        </li>
+                                        <li>
+                                          <a>
+                                            <i className="fa fa-retweet" />
+                                          </a>
+                                        </li>
+                                        <li onClick={() => OnClickAddToCard(i)}>
+                                          <a>
+                                            <i className="fa fa-shopping-cart" />
+                                          </a>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                    <div className="product__discount__item__text">
+                                      <span>{i.name}</span>
+                                      <h5>
+                                        <a href="#">Raisin’n’nuts</a>
+                                      </h5>
+                                      <div className="product__item__price">
+                                        ${i.price - (i.price * 20 / 100)}<span>${i.price}</span>
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className="owl-item cloned"
-                          style={{ width: "292.5px" }}
-                        >
-                          <div className="col-lg-4">
-                            <div className="product__discount__item">
-                              <div
-                                className="product__discount__item__pic set-bg"
-                                data-setbg="img/product/discount/pd-6.jpg"
-                                style={{
-                                  backgroundImage:
-                                    'url("img/product/discount/pd-6.jpg")',
-                                }}
-                              >
-                                <div className="product__discount__percent">
-                                  -20%
-                                </div>
-                                <ul className="product__item__pic__hover">
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-heart" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-retweet" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-shopping-cart" />
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div className="product__discount__item__text">
-                                <span>Dried Fruit</span>
-                                <h5>
-                                  <a href="#">Raisin’n’nuts</a>
-                                </h5>
-                                <div className="product__item__price">
-                                  $30.00 <span>$36.00</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="owl-item" style={{ width: "292.5px" }}>
-                          <div className="col-lg-4">
-                            <div className="product__discount__item">
-                              <div
-                                className="product__discount__item__pic set-bg"
-                                data-setbg="img/product/discount/pd-1.jpg"
-                                style={{
-                                  backgroundImage:
-                                    'url("img/product/discount/pd-1.jpg")',
-                                }}
-                              >
-                                <div className="product__discount__percent">
-                                  -20%
-                                </div>
-                                <ul className="product__item__pic__hover">
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-heart" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-retweet" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-shopping-cart" />
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div className="product__discount__item__text">
-                                <span>Dried Fruit</span>
-                                <h5>
-                                  <a href="#">Raisin’n’nuts</a>
-                                </h5>
-                                <div className="product__item__price">
-                                  $30.00 <span>$36.00</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="owl-item" style={{ width: "292.5px" }}>
-                          <div className="col-lg-4">
-                            <div className="product__discount__item">
-                              <div
-                                className="product__discount__item__pic set-bg"
-                                data-setbg="img/product/discount/pd-2.jpg"
-                                style={{
-                                  backgroundImage:
-                                    'url("img/product/discount/pd-2.jpg")',
-                                }}
-                              >
-                                <div className="product__discount__percent">
-                                  -20%
-                                </div>
-                                <ul className="product__item__pic__hover">
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-heart" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-retweet" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-shopping-cart" />
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div className="product__discount__item__text">
-                                <span>Vegetables</span>
-                                <h5>
-                                  <a href="#">Vegetables’package</a>
-                                </h5>
-                                <div className="product__item__price">
-                                  $30.00 <span>$36.00</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className="owl-item active"
-                          style={{ width: "292.5px" }}
-                        >
-                          <div className="col-lg-4">
-                            <div className="product__discount__item">
-                              <div
-                                className="product__discount__item__pic set-bg"
-                                data-setbg="img/product/discount/pd-3.jpg"
-                                style={{
-                                  backgroundImage:
-                                    'url("img/product/discount/pd-3.jpg")',
-                                }}
-                              >
-                                <div className="product__discount__percent">
-                                  -20%
-                                </div>
-                                <ul className="product__item__pic__hover">
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-heart" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-retweet" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-shopping-cart" />
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div className="product__discount__item__text">
-                                <span>Dried Fruit</span>
-                                <h5>
-                                  <a href="#">Mixed Fruitss</a>
-                                </h5>
-                                <div className="product__item__price">
-                                  $30.00 <span>$36.00</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className="owl-item active"
-                          style={{ width: "292.5px" }}
-                        >
-                          <div className="col-lg-4">
-                            <div className="product__discount__item">
-                              <div
-                                className="product__discount__item__pic set-bg"
-                                data-setbg="img/product/discount/pd-4.jpg"
-                                style={{
-                                  backgroundImage:
-                                    'url("img/product/discount/pd-4.jpg")',
-                                }}
-                              >
-                                <div className="product__discount__percent">
-                                  -20%
-                                </div>
-                                <ul className="product__item__pic__hover">
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-heart" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-retweet" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-shopping-cart" />
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div className="product__discount__item__text">
-                                <span>Dried Fruit</span>
-                                <h5>
-                                  <a href="#">Raisin’n’nuts</a>
-                                </h5>
-                                <div className="product__item__price">
-                                  $30.00 <span>$36.00</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className="owl-item active"
-                          style={{ width: "292.5px" }}
-                        >
-                          <div className="col-lg-4">
-                            <div className="product__discount__item">
-                              <div
-                                className="product__discount__item__pic set-bg"
-                                data-setbg="img/product/discount/pd-5.jpg"
-                                style={{
-                                  backgroundImage:
-                                    'url("img/product/discount/pd-5.jpg")',
-                                }}
-                              >
-                                <div className="product__discount__percent">
-                                  -20%
-                                </div>
-                                <ul className="product__item__pic__hover">
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-heart" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-retweet" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-shopping-cart" />
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div className="product__discount__item__text">
-                                <span>Dried Fruit</span>
-                                <h5>
-                                  <a href="#">Raisin’n’nuts</a>
-                                </h5>
-                                <div className="product__item__price">
-                                  $30.00 <span>$36.00</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="owl-item" style={{ width: "292.5px" }}>
-                          <div className="col-lg-4">
-                            <div className="product__discount__item">
-                              <div
-                                className="product__discount__item__pic set-bg"
-                                data-setbg="img/product/discount/pd-6.jpg"
-                                style={{
-                                  backgroundImage:
-                                    'url("img/product/discount/pd-6.jpg")',
-                                }}
-                              >
-                                <div className="product__discount__percent">
-                                  -20%
-                                </div>
-                                <ul className="product__item__pic__hover">
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-heart" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-retweet" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-shopping-cart" />
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div className="product__discount__item__text">
-                                <span>Dried Fruit</span>
-                                <h5>
-                                  <a href="#">Raisin’n’nuts</a>
-                                </h5>
-                                <div className="product__item__price">
-                                  $30.00 <span>$36.00</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className="owl-item cloned"
-                          style={{ width: "292.5px" }}
-                        >
-                          <div className="col-lg-4">
-                            <div className="product__discount__item">
-                              <div
-                                className="product__discount__item__pic set-bg"
-                                data-setbg="img/product/discount/pd-1.jpg"
-                                style={{
-                                  backgroundImage:
-                                    'url("img/product/discount/pd-1.jpg")',
-                                }}
-                              >
-                                <div className="product__discount__percent">
-                                  -20%
-                                </div>
-                                <ul className="product__item__pic__hover">
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-heart" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-retweet" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-shopping-cart" />
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div className="product__discount__item__text">
-                                <span>Dried Fruit</span>
-                                <h5>
-                                  <a href="#">Raisin’n’nuts</a>
-                                </h5>
-                                <div className="product__item__price">
-                                  $30.00 <span>$36.00</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className="owl-item cloned"
-                          style={{ width: "292.5px" }}
-                        >
-                          <div className="col-lg-4">
-                            <div className="product__discount__item">
-                              <div
-                                className="product__discount__item__pic set-bg"
-                                data-setbg="img/product/discount/pd-2.jpg"
-                                style={{
-                                  backgroundImage:
-                                    'url("img/product/discount/pd-2.jpg")',
-                                }}
-                              >
-                                <div className="product__discount__percent">
-                                  -20%
-                                </div>
-                                <ul className="product__item__pic__hover">
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-heart" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-retweet" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-shopping-cart" />
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div className="product__discount__item__text">
-                                <span>Vegetables</span>
-                                <h5>
-                                  <a href="#">Vegetables’package</a>
-                                </h5>
-                                <div className="product__item__price">
-                                  $30.00 <span>$36.00</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className="owl-item cloned"
-                          style={{ width: "292.5px" }}
-                        >
-                          <div className="col-lg-4">
-                            <div className="product__discount__item">
-                              <div
-                                className="product__discount__item__pic set-bg"
-                                data-setbg="img/product/discount/pd-3.jpg"
-                                style={{
-                                  backgroundImage:
-                                    'url("img/product/discount/pd-3.jpg")',
-                                }}
-                              >
-                                <div className="product__discount__percent">
-                                  -20%
-                                </div>
-                                <ul className="product__item__pic__hover">
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-heart" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-retweet" />
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i className="fa fa-shopping-cart" />
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div className="product__discount__item__text">
-                                <span>Dried Fruit</span>
-                                <h5>
-                                  <a href="#">Mixed Fruitss</a>
-                                </h5>
-                                <div className="product__item__price">
-                                  $30.00 <span>$36.00</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                              )
+                            })
+                          }
                       </div>
                     </div>
                     <div className="owl-nav disabled">
@@ -814,16 +291,27 @@ const Shope = () => {
                   <div className="col-lg-4 col-md-5">
                     <div className="filter__sort">
                       <span>Sort By</span>
-                      <select style={{display: 'none'}}>
+                      <select style={{ display: "none" }}>
                         <option value={0}>Default</option>
                         <option value={0}>Default</option>
-                      </select><div className="nice-select" tabIndex={0}><span className="current">Default</span><ul className="list"><li data-value={0} className="option selected focus">Default</li><li data-value={0} className="option">Default</li></ul></div>
+                      </select>
+                      <div className="nice-select" tabIndex={0}>
+                        <span className="current">Default</span>
+                        <ul className="list">
+                          <li data-value={0} className="option selected focus">
+                            Default
+                          </li>
+                          <li data-value={0} className="option">
+                            Default
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                   <div className="col-lg-4 col-md-4">
                     <div className="filter__found">
                       <h6>
-                        <span>16</span> Products found
+                        <span>{ProductFruitData.length}</span> Products found
                       </h6>
                     </div>
                   </div>
@@ -837,7 +325,7 @@ const Shope = () => {
               </div>
               {/* ========== All Shope Product Here ==============*/}
               <div className="row">
-                {FruitData.map((i) => {
+                {ProductFruitData.map((i) => {
                   return (
                     <div
                       className={`col-lg-4 col-md-4 col-sm-6 mix ${i.filter}`}
@@ -873,20 +361,15 @@ const Shope = () => {
                           <h6>
                             <a>{i.name}</a>
                           </h6>
+                          <h6>
+                            <a>Stock : {i.totalQuantity}</a>
+                          </h6>
                           <h5>${i.price}</h5>
                         </div>
                       </div>
                     </div>
                   );
                 })}
-              </div>
-              <div className="product__pagination">
-                <a href="#">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">
-                  <i className="fa fa-long-arrow-right" />
-                </a>
               </div>
             </div>
           </div>

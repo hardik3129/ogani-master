@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { SetCartTotal } from "../redux/action/CartAdd.action";
+import { UserAccessaction } from "../redux/action/UserAccess.action";
 
 const Header = () => {
 
     const [CartTotal, setCartTotal] = useState()
+    const [Bool, setBool] = useState(false)
       
     const getCartData = useSelector((data) => data.CartAddreducer.cart)
+    const getAccessToken = useSelector((key) => key.UserAccessreducer.AccessToken)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     
     // ================== Total of All Cart Price ================
     useEffect(() => {
@@ -18,6 +22,17 @@ const Header = () => {
       setCartTotal(TotalPriceCart)
       dispatch(SetCartTotal(TotalPriceCart))
     },[getCartData])
+
+    // ================= Login || Logout Set ===================
+    useEffect(() => {
+      JSON.parse(localStorage.getItem('AccessKey')) === getAccessToken ? setBool(true) : setBool(false)
+    },[])
+
+    // ================= Logout ==================
+    const OnClickLogout = () => {
+      localStorage.removeItem('AccessKey')
+      dispatch(UserAccessaction(''))
+    }
     
   return (
     <>
@@ -68,9 +83,15 @@ const Header = () => {
                       </ul>
                     </div>
                     <div className="header__top__right__auth">
-                      <Link to={'/login'}>
+                      {
+                        Bool === false ?
+                        <Link to={'/login'}>
                         <i className="fa fa-user" /> Login
-                      </Link>
+                        </Link> : 
+                        <Link to={'/login'} onClick={OnClickLogout}>
+                        <i className="fa fa-user" /> Logout
+                        </Link>
+                      }
                     </div>
                   </div>
                 </div>
