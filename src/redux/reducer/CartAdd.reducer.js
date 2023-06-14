@@ -16,7 +16,7 @@ const CartAddreducer = (state = initialstate, action) => {
             return { ...state, cart: filter }
 
         case CART_QUANTITY_INCREMENT:
-            const quantityAdd = state.cart.filter((i) => i.id === action.payload.id && i.uid === action.payload.uid ? i.quantity += 1 : i.qƒƒuantity)
+            const quantityAdd = state.cart.filter((i) => i.id === action.payload.id && i.uid === action.payload.uid ? i.quantity += 1 : i.quantity)
             return { ...state, cart: quantityAdd }
 
         case CART_QUANTITY_DECREMENT:

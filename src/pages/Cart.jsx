@@ -74,7 +74,7 @@ const Cart = () => {
                             <div className="quantity">
                               <div className="pro-qty">
                                 <span
-                                  onClick={() => i.quantity === 1 ? false : dispatch(CartDecrement(i.id, i.uid))}
+                                  onClick={() => i.quantity <= 1 ? false : dispatch(CartDecrement(i.id, i.uid))}
                                   className="dec qtybtn"
                                 >
                                   -
