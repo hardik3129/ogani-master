@@ -32,7 +32,6 @@ const Home = () => {
   
   return (
     <>
-
       {/* Hero Section Begin */}
       <section className="hero hero-normal">
         <div className="container">
