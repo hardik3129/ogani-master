@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   CartDecrement,
@@ -17,7 +17,6 @@ const Cart = () => {
 
   // ========= global data to redux =============
   const getCartData = useSelector((data) => data.CartAddreducer.cart);
-  console.log(getCartData);
 
   return (
     <>
@@ -60,12 +59,12 @@ const Cart = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {getCartData.filter(i => i.uid == getAccessToken).map((i,ind) => {
+                    {getCartData.filter(i => i.uid === getAccessToken).map((i,ind) => {
                       return (
                         <tr>
                           <td className="shoping__cart__item">
                             <div className="cart__img">
-                              <img src={i.image} alt />
+                              <img src={i.image} alt='' />
                             </div>
                             <h5>{i.name}</h5>
                           </td>
@@ -74,7 +73,7 @@ const Cart = () => {
                             <div className="quantity">
                               <div className="pro-qty">
                                 <span
-                                  onClick={() => i.quantity === 1 ? false : dispatch(CartDecrement(i.id, i.uid))}
+                                  onClick={() => i.quantity <= 1 ? false : dispatch(CartDecrement(i.id, i.uid))}
                                   className="dec qtybtn"
                                 >
                                   -
@@ -109,9 +108,9 @@ const Cart = () => {
           <div className="row">
             <div className="col-lg-12">
               <div className="shoping__cart__btns">
-                <a href="#" className="primary-btn cart-btn">
+                <Link to={'/'} className="primary-btn cart-btn">
                   CONTINUE SHOPPING
-                </a>
+                </Link>
                 <a href="js:" className="primary-btn cart-btn cart-btn-right">
                   <span className="icon_loading" />
                   Upadate Cart

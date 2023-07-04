@@ -4,6 +4,7 @@ import FruitData from "../fruits.json";
 import { toast } from "react-toastify";
 import { CartAddaction } from "../redux/action/CartAdd.action";
 import { useNavigate } from "react-router-dom";
+import OnclickAddToCard from "../function/OnclickAddToCard";
 
 const Shope = () => {
   const [price, setprice] = useState(300);
@@ -13,20 +14,15 @@ const Shope = () => {
   const dispatch = useDispatch();
 
   const getCartData = useSelector((data) => data.CartAddreducer.cart);
+  const getAccessToken = useSelector((key) => key.UserAccessreducer.AccessToken)
 
   useEffect(() => {
     setFruitData(FruitData)
   },[])
 
   // ======================= Add Product in Cart Page ==========================
-  const OnClickAddToCard = (Cart) => {
-    if (getCartData.find((i) => i.id == Cart.id)) {
-      toast.info(`Allready ${Cart.name} Add To Cart`);
-    } else {
-      const filter = FruitData.find((i) => i.id === Cart.id);
-      toast.success(`Successfully ${Cart.name} Add to Cart`);
-      dispatch(CartAddaction(filter));
-    }
+  const OnClickAddToCardRedirect = (Cart) => {
+    OnclickAddToCard(Cart, getCartData, getAccessToken, dispatch)
   };
 
   // ======================= Set Price Range ======================
@@ -34,9 +30,16 @@ const Shope = () => {
     setprice(e.target.value);
   };
 
+  // ======================= Filter Product By Range ======================
   const OnclickFilterProduct = () => {
     const filter = FruitData.filter(i => i.price <= parseInt(price, 10))
     setFruitData(filter || FruitData)
+  }
+
+  // ========================== View Product ========================
+  const OnClickView = (id) => {
+    navigate('/viewproduct')
+    localStorage.setItem('productID', id)
   }
 
   return (
@@ -165,35 +168,6 @@ const Shope = () => {
                   <h2>Sale Off</h2>
                 </div>
                 <div className="row">
-                  {/* <div className="product__discount__slider owl-carousel owl-loaded owl-drag">
-                        <div className="owl-stage-outer">
-                        {
-                            FruitData.map((i) => {
-                                return(
-                                    <div className="owl-item cloned" style={{width: '292.5px'}}>
-                                        <div className="col-lg-4">
-                                            <div className="product__discount__item">
-                                                <div className="product__discount__item__pic set-bg" data-setbg="img/product/discount/pd-4.jpg" style={{backgroundImage: 'url("img/product/discount/pd-4.jpg")'}}>
-                                                    <div className="product__discount__percent">-20%</div>
-                                                    <ul className="product__item__pic__hover">
-                                                    <li><a href="#"><i className="fa fa-heart" /></a></li>
-                                                    <li><a href="#"><i className="fa fa-retweet" /></a></li>
-                                                    <li><a href="#"><i className="fa fa-shopping-cart" /></a></li>
-                                                    </ul>
-                                                </div>
-                                                <div className="product__discount__item__text">
-                                                    <span>Dried Fruit</span>
-                                                    <h5><a href="#">Raisin’n’nuts</a></h5>
-                                                    <div className="product__item__price">$30.00 <span>$36.00</span></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        }
-                        </div>
-                    </div> */}
                   <div className="owl-carousel owl-loaded owl-drag product__discount__slider">
                     <div className="owl-stage-outer">
                       <div
@@ -234,7 +208,7 @@ const Shope = () => {
                                             <i className="fa fa-retweet" />
                                           </a>
                                         </li>
-                                        <li onClick={() => OnClickAddToCard(i)}>
+                                        <li onClick={() => OnClickAddToCardRedirect(i)}>
                                           <a>
                                             <i className="fa fa-shopping-cart" />
                                           </a>
@@ -328,7 +302,7 @@ const Shope = () => {
                 {ProductFruitData.map((i) => {
                   return (
                     <div
-                      className={`col-lg-4 col-md-4 col-sm-6 mix ${i.filter}`}
+                      className={`col-lg-4 col-md-6 col-sm-6 mix ${i.filter}`}
                     >
                       <div className="featured__item">
                         <div
@@ -350,7 +324,7 @@ const Shope = () => {
                                 <i className="fa fa-retweet" />
                               </a>
                             </li>
-                            <li onClick={() => OnClickAddToCard(i)}>
+                            <li onClick={() => OnClickAddToCardRedirect(i)}>
                               <a>
                                 <i className="fa fa-shopping-cart" />
                               </a>
@@ -365,6 +339,7 @@ const Shope = () => {
                             <a>Stock : {i.totalQuantity}</a>
                           </h6>
                           <h5>${i.price}</h5>
+                          <span onClick={() => OnClickView(i.id)} className="primary-btn">Buy Now</span>
                         </div>
                       </div>
                     </div>

@@ -1,4 +1,4 @@
-import { USER_ACCESS } from "../constant"
+import { USER_ACCESS, USER_EMAIL } from "../constant"
 
 export const UserAccessaction = (Token) => {
   return {
@@ -6,3 +6,10 @@ export const UserAccessaction = (Token) => {
     payload : Token 
   }
 }
+
+export const UserEmailaction = (userEmail) => {
+  return {
+    type : USER_EMAIL,
+    payload : userEmail
+  }
+} 

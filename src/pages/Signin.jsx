@@ -1,11 +1,12 @@
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { auth } from '../firebase'
+import { auth, provider } from '../firebase'
 import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux'
 import { RingLoader } from 'react-spinners'
-import { UserAccessaction } from '../redux/action/UserAccess.action'
+import { UserAccessaction, UserEmailaction } from '../redux/action/UserAccess.action'
+import SignInGoogle from '../function/SignInGoogle'
 
 const Login = () => {
 
@@ -13,6 +14,10 @@ const Login = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
+    const SginInGoogleRedirect = () => {
+        SignInGoogle(auth, provider, dispatch, navigate)
+    }
+    
     const OnSubmitLoginUser = async (e) => {
         e.preventDefault()
         setLoading(true)
@@ -22,8 +27,10 @@ const Login = () => {
         }
         try {
             const res = await signInWithEmailAndPassword(auth, email, password)
-            localStorage.setItem('AccessKey',JSON.stringify(res.user.uid))
-            dispatch(UserAccessaction(res.user.uid))
+            console.log(res._tokenResponse.localId);
+            localStorage.setItem('AccessKey',JSON.stringify(res._tokenResponse.localId))
+            dispatch(UserAccessaction(res._tokenResponse.localId))
+            dispatch(UserEmailaction(res.user.email))
         } catch (error) {
             toast.error(error.message)
         }
@@ -35,20 +42,21 @@ const Login = () => {
     <>
         <div className="container">
             <div className="row align-items-center justify-content-center vh-100">
-                <div className="col-sm-4 col-sm-offset-1">
-                <Link to={''}><img src="img/logo.png" alt='' /></Link>
+                <div className="col-sm-6">
                 <div className="login-form">{/*login form*/}
+                <Link to={''}><img src="img/logo.png" alt='' /></Link>
                     <h2>Login to your account</h2>
                     <form onSubmit={OnSubmitLoginUser}>
                     <input type="email" placeholder="Email Address" name='email' />
                     <input type="password" placeholder="Password" name='password' />
-                    <span className='d-flex align-items-center'>
-                        <input type="checkbox" className="me-2 my-0 checkmark" name='signin' /> 
-                        Keep me signed in
-                    </span>
-                    <span className='d-flex align-items-center'>
+                    <div className='my-2'>
                         <Link to={'/signup'}>Create An Account</Link>
-                    </span>
+                    </div>
+                    <div className="other-sign-in-mathod">
+                        <div>
+                            <img onClick={SginInGoogleRedirect} src="https://banner2.cleanpng.com/20180521/ers/kisspng-google-logo-5b02bbe1d5c6e0.2384399715269058258756.jpg" alt="" />
+                        </div>
+                    </div>
                     {Loading === true ?
                     <button type="button" className="btn btn-default">
                         <RingLoader color="#fff" loading={Loading} size={25} />

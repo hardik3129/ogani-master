@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import FruitData from '../fruits.json'
 import { useDispatch, useSelector } from "react-redux";
-import { CartAddaction } from "../redux/action/CartAdd.action";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import OnclickAddToCard from "../function/OnclickAddToCard";
 
 const Home = () => {
   
@@ -16,23 +15,22 @@ const Home = () => {
   const navigate = useNavigate()
     
   const onClickDropdown = () => {
-      setdisplayToggle(displayToggle === 'none' ? 'block' : 'none')
+      setdisplayToggle(displayToggle === 'block' ? 'none' : 'block')
   }
-  // console.log(getCartData);
+
   // ======================= Add Product in Cart Page ========================== 
-  const OnClickAddToCard = (Cart) => {
-    if (getCartData.find((i) => i.id == Cart.id && i.uid == getAccessToken)) {
-      toast.info(`Allready ${Cart.name} Add To Cart`)
-    } else {
-      const filter = FruitData.find((i) => i.id === Cart.id)
-      toast.success(`Successfully ${Cart.name} Add to Cart`)
-      dispatch(CartAddaction({...filter, uid : getAccessToken}))
-    }
+  const OnClickAddToCardRedirect = (Cart) => {
+    OnclickAddToCard(Cart, getCartData, getAccessToken, dispatch)
+  }
+
+  // ========================== View Product ========================
+  const OnClickView = (id) => {
+    navigate('/viewproduct')
+    localStorage.setItem('productID', id)
   }
   
   return (
     <>
-
       {/* Hero Section Begin */}
       <section className="hero hero-normal">
         <div className="container">
@@ -390,13 +388,14 @@ const Home = () => {
                         <ul className="featured__item__pic__hover">
                           <li><a><i className="fa fa-heart" /></a></li>
                           <li><a><i className="fa fa-retweet" /></a></li>
-                          <li onClick={() => OnClickAddToCard(i)}><a><i className="fa fa-shopping-cart" /></a></li>
+                          <li onClick={() => OnClickAddToCardRedirect(i)}><a><i className="fa fa-shopping-cart" /></a></li>
                         </ul>
                       </div>
                       <div className="featured__item__text">
                         <h6><a>{i.name}</a></h6>
                         <h6><a>Stock : {i.totalQuantity}</a></h6>
                         <h5>${i.price}</h5>
+                        <span onClick={() => OnClickView(i.id)} className="primary-btn">Buy Now</span>
                       </div>
                     </div>
                   </div>

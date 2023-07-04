@@ -5,7 +5,8 @@ const Checkout = () => {
 
     const CartTotal = useSelector((data) => data.CartAddreducer.cartTotal)
     const getCartData = useSelector((data) => data.CartAddreducer.cart)
-    
+    const AccessKey = useSelector((key) => key.UserAccessreducer.AccessToken)
+
   return (
     <>
         <div>
@@ -120,7 +121,7 @@ const Checkout = () => {
                             <div className="checkout__order__products">Products <span>Total</span></div>
                             <ul>
                             {
-                                getCartData.map((i) => {
+                                getCartData.filter(i => i.uid === AccessKey).map((i) => {
                                     return <li>{i.name} <span>${i.price * i.quantity}</span></li>
                                 })
                             }

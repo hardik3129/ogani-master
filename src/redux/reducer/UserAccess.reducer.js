@@ -1,7 +1,8 @@
-import { USER_ACCESS } from "../constant";
+import { USER_ACCESS, USER_EMAIL } from "../constant";
 
 const initialstate = {
-    AccessToken : ''
+    AccessToken : '',
+    UserEmail : ''
 }
 
 const UserAccessreducer = (state = initialstate, action) => {
@@ -9,6 +10,8 @@ const UserAccessreducer = (state = initialstate, action) => {
     switch (action.type) {
         case USER_ACCESS:
             return { ...state, AccessToken : action.payload }
+        case USER_EMAIL:
+            return { ...state, UserEmail : action.payload }
         default:
             break;
     }
